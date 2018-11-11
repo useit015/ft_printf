@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 07:10:10 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/11 03:25:55 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ void	handle_null(char *s)
 	ft_memset(g_buff, 0, BUFF_SIZE);
 }
 
+int		buff_is_null(char *s)
+{
+	while (*s)
+	{
+		if (*s != 48 && *s != ' ')
+			return (0);
+		s++;
+	}
+	return (1);
+}
+
 void	handle_flag(char *s, t_param *arg)
 {
 	int		len;
@@ -40,7 +51,7 @@ void	handle_flag(char *s, t_param *arg)
 	len = (int)ft_strlen(s);
 	s = handle_width(arg, s, len);
 	s = handle_plus_space(arg, s, len);
-	if (!(*s == '0' && !*(s + 1)) || arg->f == 'p')
+	if (!buff_is_null(s) || arg->f == 'p')
 		s = handle_hash(arg, s, len);
 	if (arg->null)
 		handle_null(s);
@@ -59,16 +70,16 @@ void	handler(char *f, va_list ap)
 	parse_flags(f, &arg);
 	while (*f && is_flag(*f))
 		f++;
-	while (*f && (!is_fspec(*f) || g_i != i) && *f != '%')
+	if (*f)
 	{
-		g_buff[g_i++] = *f;
-		f++;
-	}
-	if (*f == '%' && g_i != i)
-		return (handler(++f, ap));
-	if (*f && is_fspec(*f))
-	{
-		s = convert_arg(f, ap, &arg);
+		if (is_fspec(*f))
+			s = convert_arg(f, ap, &arg);
+		else
+		{
+			s = ft_strnew(2);
+			*s = *f;
+			arg.f = 'c';
+		}
 		handle_flag(s, &arg);
 		while (g_buff[g_i])
 			g_i++;
@@ -86,6 +97,7 @@ int		ft_printf(const char *format, ...)
 	va_list	ap;
 
 	g_ret = 0;
+	setlocale(LC_ALL, "");
 	if (!format || !*format)
 		return (0);
 	f = (char *)format;

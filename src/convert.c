@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 18:43:39 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 22:12:03 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/10 23:13:47 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,14 @@ char		*convert_arg(char *f, va_list ap, t_param *arg)
 	else if (*f == 's')
 		s = va_arg(ap, char *);
 	else if (*f == 'C' || (*f == 'c' && arg->l))
+	{
 		s = ft_unitoa(va_arg(ap, wchar_t));
+		if (!*s)
+		{
+			arg->null = 1;
+			*s = '|';
+		}
+	}
 	else if (*f == 'c')
 		s = convert_char(arg, ap);
 	else if (*f == '%')

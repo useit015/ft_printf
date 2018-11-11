@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:41:51 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 22:25:49 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/11 04:46:27 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,21 @@ static char	*trim_arg(char *s, t_param *arg, int len)
 	slen = ft_strlen(s);
 	if (!arg->minus)
 	{
-		if (arg->width > len && ft_strchr("oO", arg->f))
+		if ((arg->width > len || (arg->precision >= len && *s == 48))
+			&& ft_strchr("oO", arg->f))
 			s++;
 		else if (arg->width - 1 > len)
 			s += 2;
 	}
 	else
 	{
-		if (arg->width > len && ft_strchr("oO", arg->f))
+		if ((arg->width > len || arg->precision >= len)
+			&& ft_strchr("oO", arg->f))
 			s[slen - 1] = 0;
 		else if (arg->width - 1 > len)
 			s[slen - 2] = 0;
+		else if (arg->width > len)
+			s[slen - 1] = 0;
 	}
 	return (s);
 }
@@ -53,7 +57,7 @@ char		*handle_width(t_param *arg, char *s, int len)
 
 	i = 0;
 	sign = 0;
-	if (arg->zero && arg->precision != -1)
+	if (arg->zero && arg->precision > -1 && arg->f != '%')
 		arg->zero = 0;
 	c = get_fill(arg);
 	if (arg->width > len)
@@ -97,7 +101,7 @@ char		*handle_hash(t_param *a, char *s, int len)
 			;
 		if (!a->minus && !a->zero && i > 0)
 		{
-			if (a->f == 'o')
+			if (ft_strchr("oO", a->f))
 				i--;
 			else if (i > 1)
 				i -= 2;
@@ -108,7 +112,7 @@ char		*handle_hash(t_param *a, char *s, int len)
 		free(tmp);
 	}
 	if (a->f == 'p' && !*s)
-		return "0x";
+		return ("0x");
 	return (s);
 }
 
@@ -152,10 +156,10 @@ char		*handle_precision(t_param *arg, char *s, int len)
 	{
 		if (ft_strchr(s, '-'))
 			len--;
-		if (((*s == '0' && !*(s + 1) && (!arg->hash || (arg->f != 'o' &&
-			arg->f != 'O'))) || arg->f == 's') && !arg->precision)
+		if (((*s == '0' && !*(s + 1) && (!arg->hash || !ft_strchr("oO", arg->f))) ||
+			arg->f == 's') && !arg->precision)
 			s = ft_strnew(1);
-		else if (arg->f == 's' && arg->precision < len)
+		else if (ft_strchr("sSC", arg->f) && arg->precision < len)
 			s = ft_strncpy(ft_strnew(arg->precision + 1), s, arg->precision);
 		else if (ft_strchr("dDiuUoOxXp", arg->f) && arg->precision > len)
 		{

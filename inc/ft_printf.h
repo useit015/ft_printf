@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 04:00:54 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/11 03:32:31 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 
 # include <stdarg.h>
 # include "lib.h"
+# include <locale.h>
 # include <stdio.h>
+# include <wchar.h>
 
 # define BUFF_SIZE 4096
 
