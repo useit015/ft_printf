@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/11 03:32:31 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 00:59:41 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef	struct		s_param
 {
 	int				width;
 	int				precision;
+	unsigned int	err:1;
 	unsigned int	null:1;
 	unsigned int	minus:1;
 	unsigned int	plus:1;
@@ -46,9 +47,9 @@ int					g_ret;
 
 void				buff_init(char *f, int pos);
 void				init_arg(t_param *arg);
-void				handler(char *f, va_list ap);
+int					handler(char *f, va_list ap, char *cut);
 void				parse_flags(char *f, t_param *arg);
-void				buff_cpy(char *f, int pos, va_list ap);
+int					buff_cpy(char *f, int pos, va_list ap);
 char				*handle_precision(t_param *arg, char *s, int len);
 char				*handle_plus_space(t_param *arg, char *s, int len);
 char				*handle_width(t_param *arg, char *s, int len);
