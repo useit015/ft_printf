@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:37:49 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 06:32:18 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/11 05:11:03 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	init_arg(t_param *arg)
 {
 	arg->precision = -1;
+	arg->err = 0;
 	arg->null = 0;
 	arg->minus = 0;
 	arg->plus = 0;

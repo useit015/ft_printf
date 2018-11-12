@@ -6,15 +6,17 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/10 05:54:53 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 06:05:48 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 01:31:35 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/lib.h"
 
-char	*ft_unistrtoa(wchar_t *c)
+char	*ft_unistrtoa(wchar_t *c, int max)
 {
+	size_t	len;
 	char	*s;
+	char	*uni;
 	char	*tmp;
 
 	if (!c)
@@ -22,10 +24,18 @@ char	*ft_unistrtoa(wchar_t *c)
 	s = ft_strnew(1);
 	while (*c)
 	{
-		tmp = s;
-		s = ft_strjoin(s, ft_unitoa(*c));
-		free(tmp);
-		c++;
+		uni = ft_unitoa(*c);
+		len = ft_strlen(uni);
+		if (len <= (size_t)max)
+		{
+			max -= len;
+			tmp = s;
+			s = ft_strjoin(s, uni);
+			free(tmp);
+			c++;
+		}
+		else
+			break ;
 	}
 	return (s);
 }

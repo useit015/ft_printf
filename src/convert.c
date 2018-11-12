@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 18:43:39 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 23:13:47 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 01:39:38 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,32 @@ char		*convert_char(t_param *arg, va_list ap)
 	return (s);
 }
 
+char		*convert_wchar(t_param *arg, va_list ap)
+{
+	wchar_t		uni;
+	char		*s;
+
+	uni = va_arg(ap, wchar_t);
+	if (uni < 0 || (uni >= 0xd800 && uni < 0xe000 ) ||
+		uni > 0x10ffff || (uni >= 256 && MB_CUR_MAX == 1))
+		arg->err = 1;
+	s = ft_unitoa(uni);
+	if (!*s)
+	{
+		arg->null = 1;
+		*s = '|';
+	}
+	return (s);
+}
+
 char		*convert_arg(char *f, va_list ap, t_param *arg)
 {
+	int			i;
 	char		*s;
 	char		*base;
+	wchar_t		*uni;
 
+	i = 0;
 	base = get_base(*f);
 	if (*f == 'p')
 	{
@@ -104,18 +125,21 @@ char		*convert_arg(char *f, va_list ap, t_param *arg)
 	else if (*f == 'd' || *f == 'i' || *f == 'D')
 		s = convert_int(f, arg, ap);
 	else if (*f == 'S' || (*f == 's' && arg->l))
-		s = ft_unistrtoa(va_arg(ap, wchar_t *));
+	{
+		uni = va_arg(ap, wchar_t *);
+		while (uni[i])
+		{
+			if (uni[i] < 0 || (uni[i] >= 0xd800 && uni[i] < 0xe000 ) ||
+				uni[i] > 0x10ffff || (uni[i] >= 256 && MB_CUR_MAX == 1))
+				arg->err = 1;
+			i++;
+		}
+		s = ft_unistrtoa(uni, arg->precision);
+	}
 	else if (*f == 's')
 		s = va_arg(ap, char *);
 	else if (*f == 'C' || (*f == 'c' && arg->l))
-	{
-		s = ft_unitoa(va_arg(ap, wchar_t));
-		if (!*s)
-		{
-			arg->null = 1;
-			*s = '|';
-		}
-	}
+		s = convert_wchar(arg, ap);
 	else if (*f == 'c')
 		s = convert_char(arg, ap);
 	else if (*f == '%')

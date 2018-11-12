@@ -6,13 +6,13 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/11 03:25:55 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 01:08:25 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-void	handle_null(char *s)
+void		handle_null(char *s)
 {
 	int		i;
 	int		len;
@@ -31,7 +31,7 @@ void	handle_null(char *s)
 	ft_memset(g_buff, 0, BUFF_SIZE);
 }
 
-int		buff_is_null(char *s)
+int			buff_is_null(char *s)
 {
 	while (*s)
 	{
@@ -42,7 +42,7 @@ int		buff_is_null(char *s)
 	return (1);
 }
 
-void	handle_flag(char *s, t_param *arg)
+static void	handle_flag(char *s, t_param *arg, char *cut)
 {
 	int		len;
 
@@ -56,16 +56,19 @@ void	handle_flag(char *s, t_param *arg)
 	if (arg->null)
 		handle_null(s);
 	else
+	{
+		s = ft_strjoin(cut, s);
 		ft_strcat(g_buff, s);
+		free(s);
+	}
 }
 
-void	handler(char *f, va_list ap)
+int			handler(char *f, va_list ap, char *cut)
 {
 	int		i;
 	char	*s;
 	t_param	arg;
 
-	i = g_i;
 	init_arg(&arg);
 	parse_flags(f, &arg);
 	while (*f && is_flag(*f))
@@ -80,15 +83,19 @@ void	handler(char *f, va_list ap)
 			*s = *f;
 			arg.f = 'c';
 		}
-		handle_flag(s, &arg);
+		if (arg.err)
+			return (0);
+		handle_flag(s, &arg, cut);
 		while (g_buff[g_i])
 			g_i++;
 		i = get_next_spec(++f);
-		buff_cpy(f, i, ap);
+		if (buff_cpy(f, i, ap) == 0)
+			return (0);
 	}
+	return (1);
 }
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
 	int		i;
 	int		j;
@@ -97,7 +104,6 @@ int		ft_printf(const char *format, ...)
 	va_list	ap;
 
 	g_ret = 0;
-	setlocale(LC_ALL, "");
 	if (!format || !*format)
 		return (0);
 	f = (char *)format;
@@ -109,9 +115,13 @@ int		ft_printf(const char *format, ...)
 		return (j);
 	}
 	buff_init(f, i);
-	handler(f + i + 1, ap);
+	if (!handler(f + i + 1, ap, ""))
+	{
+		write(1, g_buff, g_i);
+		return (-1);
+	}
 	va_end(ap);
-	res = ft_strlen(g_buff);
+	res = g_i;
 	write(1, g_buff, res);
 	g_ret += res;
 	return (g_ret);

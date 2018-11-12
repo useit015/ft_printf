@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:48:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/09 01:08:36 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 01:12:10 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,30 @@ void	buff_init(char *f, int pos)
 	}
 }
 
-void	buff_cpy(char *f, int pos, va_list ap)
+int		buff_cpy(char *f, int pos, va_list ap)
 {
 	int		i;
+	int		j;
+	char	*s;
 
 	i = -1;
+	j = -1;
+	s = ft_strnew(pos + 1);
 	while (++i < pos)
-		g_buff[g_i++] = f[i];
+		s[i] = f[i];
 	if (*(f + i + 1) && f[i] == '%')
-		handler(f + i + 1, ap);
+	{
+		if ((j = handler(f + i + 1, ap, s)))
+			return (1);
+	}
+	if (*s && j)
+	{
+		ft_strcat(g_buff, s);
+		while (g_buff[g_i])
+			g_i++;
+		return (1);
+	} 
+	if (!f[i])
+		return (1);
+	return (0);
 }
