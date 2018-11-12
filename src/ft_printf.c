@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 01:08:25 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 05:59:25 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,7 @@ int			handler(char *f, va_list ap, char *cut)
 		if (is_fspec(*f))
 			s = convert_arg(f, ap, &arg);
 		else
-		{
-			s = ft_strnew(2);
-			*s = *f;
-			arg.f = 'c';
-		}
+			s = new_fspec(&arg, *f);
 		if (arg.err)
 			return (0);
 		handle_flag(s, &arg, cut);
@@ -107,13 +103,9 @@ int			ft_printf(const char *format, ...)
 	if (!format || !*format)
 		return (0);
 	f = (char *)format;
-	j = ft_strlen(f);
 	va_start(ap, format);
-	if ((i = get_next_spec(f)) == j)
-	{
-		write(1, f, j);
+	if ((j = direct_print(f, &i)))
 		return (j);
-	}
 	buff_init(f, i);
 	if (!handler(f + i + 1, ap, ""))
 	{

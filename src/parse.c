@@ -6,24 +6,48 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:50:31 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 22:17:42 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 06:22:24 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-int			is_fspec(char f)
+void		parse_precision(char **f, t_param *arg)
 {
-	if (ft_strchr("%cCsSdDiuUxXoOp", f))
-		return (1);
-	return (0);
+	while (**f == '.')
+		(*f)++;
+	arg->precision = ft_atoi(*f);
+	while (ft_isdigit(**f))
+		(*f)++;
 }
 
-int			is_flag(char f)
+void		parse_width(char **f, t_param *arg)
 {
-	if (ft_strchr(" +-.#lhjz", f) || ft_isdigit(f))
-		return (1);
-	return (0);
+	arg->width = ft_atoi(*f);
+	while (ft_isdigit(**f))
+		(*f)++;
+}
+
+void		parse_mods(char **f, t_param *arg)
+{
+	if (**f == 'l' && *((*f) + 1) == 'l')
+	{
+		(*f)++;
+		arg->ll = 1;
+	}
+	else if (**f == 'h' && *((*f) + 1) == 'h')
+	{
+		(*f)++;
+		arg->hh = 1;
+	}
+	else if (**f == 'l')
+		arg->l = 1;
+	else if (**f == 'h')
+		arg->h = 1;
+	else if (**f == 'z')
+		arg->z = 1;
+	else if (**f == 'j')
+		arg->j = 1;
 }
 
 void		parse_flags(char *f, t_param *arg)
@@ -31,11 +55,7 @@ void		parse_flags(char *f, t_param *arg)
 	while (is_flag(*f))
 	{
 		if (*f != 48 && ft_isdigit(*f))
-		{
-			arg->width = ft_atoi(f);
-			while (ft_isdigit(*f))
-				f++;
-		}
+			parse_width(&f, arg);
 		if (*f == '#')
 			arg->hash = 1;
 		else if (*f == '-')
@@ -47,31 +67,8 @@ void		parse_flags(char *f, t_param *arg)
 		else if (*f == ' ')
 			arg->space = 1;
 		else if (*f == '.' && arg->precision == -1)
-		{
-			while (*f == '.')
-				f++;
-			arg->precision = ft_atoi(f);
-			while (ft_isdigit(*f))
-				f++;
-		}
-		if (*f == 'l' && *(f + 1) == 'l')
-		{
-			f++;
-			arg->ll = 1;
-		}
-		else if (*f == 'h' && *(f + 1) == 'h')
-		{
-			f++;
-			arg->hh = 1;
-		}
-		else if (*f == 'l')
-			arg->l = 1;
-		else if (*f == 'h')
-			arg->h = 1;
-		else if (*f == 'z')
-			arg->z = 1;
-		else if (*f == 'j')
-			arg->j = 1;
+			parse_precision(&f, arg);
+		parse_mods(&f, arg);
 		if (is_fspec(*f))
 			break ;
 		f++;

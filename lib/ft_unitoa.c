@@ -6,40 +6,35 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/10 05:02:52 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 01:38:43 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 03:44:00 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/lib.h"
 
-char	*ft_unitoa(wchar_t c)
+char	*ft_unitoa(wchar_t c, char *s)
 {
-	int		i;
-	char	*s;
-
-	i = -1;
-	s = ft_strnew(5);
 	if (MB_CUR_MAX == 1 && c > 127 && c < 256)
-		s[++i] = c;
+		*s = c;
 	else if (c <= 0x7F)
-		s[++i] = c;
+		*s = c;
 	else if (c <= 0x7FF)
 	{
-		s[++i] = (c >> 6) + 0xC0;
-		s[++i] = (c & 0x3F) + 0x80;
+		s[0] = (c >> 6) + 0xC0;
+		s[1] = (c & 0x3F) + 0x80;
 	}
 	else if (c <= 0xFFFF)
 	{
-		s[++i] = (c >> 12) + 0xE0;
-		s[++i] = ((c >> 6) & 0x3F) + 0x80;
-		s[++i] = (c & 0x3F) + 0x80;
+		s[0] = (c >> 12) + 0xE0;
+		s[1] = ((c >> 6) & 0x3F) + 0x80;
+		s[2] = (c & 0x3F) + 0x80;
 	}
 	else if (c <= 0x10FFFF)
 	{
-		s[++i] = (c >> 18) + 0xF0;
-		s[++i] = ((c >> 12) & 0x3F) + 0x80;
-		s[++i] = ((c >> 6) & 0x3F) + 0x80;
-		s[++i] = (c & 0x3F) + 0x80;
+		s[0] = (c >> 18) + 0xF0;
+		s[1] = ((c >> 12) & 0x3F) + 0x80;
+		s[2] = ((c >> 6) & 0x3F) + 0x80;
+		s[3] = (c & 0x3F) + 0x80;
 	}
 	return (s);
 }

@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 23:45:06 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 01:19:38 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 03:43:21 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t		ft_strlen(const char *str);
 int			ft_isdigit(int c);
 int			ft_isspace(int c);
 int			ft_atoi(const char *str);
-char		*ft_unitoa(wchar_t c);
+char		*ft_unitoa(wchar_t c, char *s);
 char		*ft_unistrtoa(wchar_t *c, int max);
 char		*ft_itoa(int n);
 char		*ft_ltoa(long int n);

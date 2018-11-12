@@ -6,86 +6,50 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:41:51 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 01:20:31 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 05:47:07 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-static char	*trim_arg(char *s, t_param *arg, int len)
-{
-	size_t slen;
-
-	slen = ft_strlen(s);
-	if (!arg->minus)
-	{
-		if ((arg->width > len || (arg->precision >= len && *s == 48))
-			&& ft_strchr("oO", arg->f))
-			s++;
-		else if (arg->width - 1 > len)
-			s += 2;
-	}
-	else
-	{
-		if ((arg->width > len || arg->precision >= len)
-			&& ft_strchr("oO", arg->f))
-			s[slen - 1] = 0;
-		else if (arg->width - 1 > len)
-			s[slen - 2] = 0;
-		else if (arg->width > len)
-			s[slen - 1] = 0;
-	}
-	return (s);
-}
-
-static void	copy_arg_str(char *s, char *dst, int *i)
-{
-	while (*s)
-	{
-		dst[*i] = *s;
-		s++;
-		(*i)++;
-	}
-}
-
-char		*handle_width(t_param *arg, char *s, int len)
+static char	*expand_str(t_param *arg, char *s, int len, char c)
 {
 	int		i;
 	int		sign;
-	char	c;
 	char	*tmp;
 
 	i = 0;
 	sign = 0;
-	if (arg->zero && arg->precision > -1 && arg->f != '%')
+	tmp = ft_strnew(arg->width);
+	if (arg->minus)
+	{
+		copy_arg_str(s, tmp, &i);
+		while (i < arg->width)
+			tmp[i++] = c;
+	}
+	else
+	{
+		sign = is_negative(arg, &s, &len);
+		while (i < arg->width - len)
+			tmp[i++] = c;
+		copy_arg_str(s, tmp, &i);
+		if (sign)
+			tmp[0] = '-';
+	}
+	tmp[i] = 0;
+	return (tmp);
+}
+
+char		*handle_width(t_param *arg, char *s, int len)
+{
+	char	c;
+
+	if (arg->zero && arg->f != '%' && !arg->null && (arg->precision > 0 ||
+		(arg->precision > -1 && ft_strchr("diDuUoOxXp", arg->f))))
 		arg->zero = 0;
 	c = get_fill(arg);
 	if (arg->width > len)
-	{
-		tmp = ft_strnew(arg->width);
-		if (arg->minus)
-		{
-			copy_arg_str(s, tmp, &i);
-			while (i < arg->width)
-				tmp[i++] = c;
-		}
-		else
-		{
-			if (arg->zero && *s == '-')
-			{
-				sign = 1;
-				len--;
-				s++;
-			}
-			while (i < arg->width - len)
-				tmp[i++] = c;
-			copy_arg_str(s, tmp, &i);
-			if (sign)
-				tmp[0] = '-';
-		}
-		tmp[i] = 0;
-		s = tmp;
-	}
+		s = expand_str(arg, s, len, c);
 	return (s);
 }
 
@@ -132,17 +96,7 @@ char		*handle_plus_space(t_param *arg, char *s, int len)
 			tmp[i] = s[i];
 		tmp[i] = c;
 		ft_strcpy(tmp + i + 1, s + i);
-		if (arg->width > len)
-		{
-			if (arg->minus)
-				tmp[ft_strlen(tmp) - 1] = 0;
-			else
-			{
-				tmp++;
-				if (*(tmp - 1) == c)
-					*tmp = c;
-			}
-		}
+		tmp = trim_arg2(arg, tmp, c, len);
 		s = tmp;
 	}
 	return (s);
@@ -152,12 +106,12 @@ char		*handle_precision(t_param *arg, char *s, int len)
 {
 	char	*tmp;
 
-	if (arg->precision >= 0)
+	if (arg->precision >= 0 && !arg->null)
 	{
 		if (ft_strchr(s, '-'))
 			len--;
-		if (((*s == '0' && !*(s + 1) && (!arg->hash || !ft_strchr("oO", arg->f))) ||
-			arg->f == 's') && !arg->precision)
+		if (((*s == '0' && !*(s + 1) && (!arg->hash ||
+			!ft_strchr("oO", arg->f))) || arg->f == 's') && !arg->precision)
 			s = ft_strnew(1);
 		else if (ft_strchr("sSC", arg->f) && arg->precision < len)
 			s = ft_strncpy(ft_strnew(arg->precision + 1), s, arg->precision);

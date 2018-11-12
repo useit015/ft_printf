@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:48:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 01:12:10 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 06:23:51 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,32 @@ int		buff_cpy(char *f, int pos, va_list ap)
 		while (g_buff[g_i])
 			g_i++;
 		return (1);
-	} 
-	if (!f[i])
+	}
+	if (!f[i] || (f[i] == '%' && !f[i + 1]))
+		return (1);
+	return (0);
+}
+
+char	*new_fspec(t_param *arg, char f)
+{
+	char	*s;
+
+	s = ft_strnew(2);
+	*s = f;
+	arg->f = 'c';
+	return (s);
+}
+
+int		is_fspec(char f)
+{
+	if (ft_strchr("%cCsSdDiuUxXoOp", f))
+		return (1);
+	return (0);
+}
+
+int		is_flag(char f)
+{
+	if (ft_strchr(" +-.#lhjz", f) || ft_isdigit(f))
 		return (1);
 	return (0);
 }

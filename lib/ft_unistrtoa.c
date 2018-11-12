@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/10 05:54:53 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 01:31:35 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 03:45:41 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_unistrtoa(wchar_t *c, int max)
 	s = ft_strnew(1);
 	while (*c)
 	{
-		uni = ft_unitoa(*c);
+		uni = ft_unitoa(*c, ft_strnew(5));
 		len = ft_strlen(uni);
 		if (len <= (size_t)max)
 		{
