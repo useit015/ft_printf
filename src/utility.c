@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:37:49 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/11 05:11:03 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 06:39:17 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,32 @@ char	*get_prefix(char c)
 		return ("0x");
 	if (c == 'X')
 		return ("0X");
-	else
-		return ("0");
+	return ("0");
 }
 
 char	*get_base(char c)
 {
+	if (c == 'b')
+		return ("01");
 	if (c == 'x')
 		return ("0123456789abcdef");
-	else if (c == 'X')
+	if (c == 'X')
 		return ("0123456789ABCDEF");
-	else if (c == 'o' || c == 'O')
+	if (c == 'o' || c == 'O')
 		return ("01234567");
-	else
-		return ("");
+	return ("");
 }
 
 char	get_sign(t_param *arg)
 {
 	if (arg->plus)
 		return ('+');
-	else
-		return (' ');
+	return (' ');
 }
 
 char	get_fill(t_param *arg)
 {
 	if (arg->zero && !arg->minus)
 		return ('0');
-	else
-		return (' ');
+	return (' ');
 }

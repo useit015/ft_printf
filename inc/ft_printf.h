@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 04:41:28 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 02:19:34 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ int					g_ret;
 
 void				init_arg(t_param *arg);
 void				buff_init(char *f, int pos);
-void				parse_flags(char *f, t_param *arg);
+void				parse_flags(char *f, t_param *arg, va_list ap);
 void				copy_arg_str(char *s, char *dst, int *i);
 char				*convert_b(char *f, t_param *arg, va_list ap, char *base);
 char				*trim_arg2(t_param *arg, char *s, char c, int len);
 char				*handle_plus_space(t_param *arg, char *s, int len);
 char				*handle_precision(t_param *arg, char *s, int len);
 char				*convert_uint(char *f, t_param *arg, va_list ap);
-char				*convert_arg(char *f, va_list ap, t_param *arg);
+char				*convert_arg(char *f, va_list ap, t_param *arg, char *base);
 char				*convert_int(char *f, t_param *arg, va_list ap);
 char				*handle_width(t_param *arg, char *s, int len);
 char				*handle_hash(t_param *arg, char *s, int len);

@@ -6,12 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/09 05:01:23 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 22:17:49 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 04:27:30 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/lib.h"
-#include <stdio.h>
 
 static void	ltoa_isnegative(long int *n, int *negative)
 {

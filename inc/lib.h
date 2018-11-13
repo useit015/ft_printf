@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/07 23:45:06 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 03:43:21 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 00:05:34 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ char		*ft_itoa(int n);
 char		*ft_ltoa(long int n);
 char		*ft_jtoa(intmax_t n);
 char		*ft_htoa(short n);
+char		*ft_ftoa(double f, int p);
 char		*ft_lltoa(long long int n);
 char		*ft_hhtoa(signed char n);
 char		*ft_utoa(unsigned int n);

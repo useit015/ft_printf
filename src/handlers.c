@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:41:51 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 05:47:07 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 02:13:06 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ char		*handle_width(t_param *arg, char *s, int len)
 {
 	char	c;
 
-	if (arg->zero && arg->f != '%' && !arg->null && (arg->precision > 0 ||
-		(arg->precision > -1 && ft_strchr("diDuUoOxXp", arg->f))))
+	if (!ft_strchr("%fF", arg->f) && !arg->null && (arg->precision > 0 ||
+		(arg->precision > -1 && ft_strchr("diDuUoOxXp", arg->f))) && arg->zero)
 		arg->zero = 0;
 	c = get_fill(arg);
 	if (arg->width > len)

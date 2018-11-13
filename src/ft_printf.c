@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 05:59:25 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 02:19:03 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,13 +70,13 @@ int			handler(char *f, va_list ap, char *cut)
 	t_param	arg;
 
 	init_arg(&arg);
-	parse_flags(f, &arg);
+	parse_flags(f, &arg, ap);
 	while (*f && is_flag(*f))
 		f++;
 	if (*f)
 	{
 		if (is_fspec(*f))
-			s = convert_arg(f, ap, &arg);
+			s = convert_arg(f, ap, &arg, get_base(*f));
 		else
 			s = new_fspec(&arg, *f);
 		if (arg.err)

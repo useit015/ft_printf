@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:50:31 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 06:22:24 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/12 07:57:29 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void		parse_precision(char **f, t_param *arg)
 	while (**f == '.')
 		(*f)++;
 	arg->precision = ft_atoi(*f);
+	if (!ft_isdigit(**f))
+		(*f)--;
 	while (ft_isdigit(**f))
 		(*f)++;
 }
@@ -50,13 +52,31 @@ void		parse_mods(char **f, t_param *arg)
 		arg->j = 1;
 }
 
-void		parse_flags(char *f, t_param *arg)
+void		parse_star(t_param *arg, va_list ap)
+{
+	int i;
+
+	i = va_arg(ap, int);
+	if (i < 0 && arg->precision == -1)
+	{
+		arg->minus = 1;
+		i = -i;
+	}
+	if (arg->precision == -1)
+		arg->width = i;
+	else
+		arg->precision = i;
+}
+
+void		parse_flags(char *f, t_param *arg, va_list ap)
 {
 	while (is_flag(*f))
 	{
 		if (*f != 48 && ft_isdigit(*f))
 			parse_width(&f, arg);
-		if (*f == '#')
+		if (*f == '*')
+			parse_star(arg, ap);
+		else if (*f == '#')
 			arg->hash = 1;
 		else if (*f == '-')
 			arg->minus = 1;
@@ -75,17 +95,4 @@ void		parse_flags(char *f, t_param *arg)
 	}
 	if (is_fspec(*f))
 		arg->f = *f;
-}
-
-int			get_next_spec(char *f)
-{
-	int		i;
-
-	i = -1;
-	while (f[++i])
-	{
-		if (f[i] == '%')
-			return (i);
-	}
-	return (i);
 }

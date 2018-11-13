@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:48:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 06:23:51 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 06:36:42 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ char	*new_fspec(t_param *arg, char f)
 
 int		is_fspec(char f)
 {
-	if (ft_strchr("%cCsSdDiuUxXoOp", f))
+	if (ft_strchr("%cCsSdDiuUxXoOpfFeEgGb", f))
 		return (1);
 	return (0);
 }
 
 int		is_flag(char f)
 {
-	if (ft_strchr(" +-.#lhjz", f) || ft_isdigit(f))
+	if (ft_strchr(" +-.#lhjzL$*'", f) || ft_isdigit(f))
 		return (1);
 	return (0);
 }
