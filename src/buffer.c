@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:48:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/13 21:55:28 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/14 02:34:48 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*new_fspec(t_param *arg, char f)
 
 int		is_fspec(char f)
 {
-	if (ft_strchr("%cCsSdDiuUxXoOpfFb", f))
+	if (ft_strchr("%cCsSdDiuUxXoOpb", f))
 		return (1);
 	return (0);
 }
