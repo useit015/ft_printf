@@ -6,26 +6,33 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/13 02:19:03 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/14 01:44:20 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/ft_printf.h"
 
-void		handle_null(char *s)
+void		handle_null(char *s, int nu, char *cut)
 {
 	int		i;
 	int		len;
 
 	i = -1;
-	len = ft_strlen(g_buff);
+	write(1, g_buff, g_i);
+	g_ret += g_i;
 	g_i = 0;
-	write(1, g_buff, len);
-	g_ret += len;
 	len = ft_strlen(s);
-	while (s[++i] != '|' && i < len)
-		;
-	s[i] = 0;
+	if (nu)
+	{
+		while (s[++i] != '|' && i < len)
+			;
+		s[i] = 0;
+	}
+	else
+	{
+		s = ft_strjoin(cut, s);
+		len = ft_strlen(s);
+	}
 	write(1, s, len);
 	g_ret += len;
 	ft_memset(g_buff, 0, BUFF_SIZE);
@@ -53,14 +60,7 @@ static void	handle_flag(char *s, t_param *arg, char *cut)
 	s = handle_plus_space(arg, s, len);
 	if (!buff_is_null(s) || arg->f == 'p')
 		s = handle_hash(arg, s, len);
-	if (arg->null)
-		handle_null(s);
-	else
-	{
-		s = ft_strjoin(cut, s);
-		ft_strcat(g_buff, s);
-		free(s);
-	}
+	handle_null(s, arg->null, cut);
 }
 
 int			handler(char *f, va_list ap, char *cut)
@@ -71,8 +71,7 @@ int			handler(char *f, va_list ap, char *cut)
 
 	init_arg(&arg);
 	parse_flags(f, &arg, ap);
-	while (*f && is_flag(*f))
-		f++;
+	f = skip_flags(f);
 	if (*f)
 	{
 		if (is_fspec(*f))
@@ -82,9 +81,11 @@ int			handler(char *f, va_list ap, char *cut)
 		if (arg.err)
 			return (0);
 		handle_flag(s, &arg, cut);
-		while (g_buff[g_i])
-			g_i++;
-		i = get_next_spec(++f);
+		if ((i = get_next_spec(++f)) > BUFF_SIZE - g_i)
+		{
+			write(1, f, i);
+			return (handler(f + i + 1, ap, ""));
+		}
 		if (buff_cpy(f, i, ap) == 0)
 			return (0);
 	}

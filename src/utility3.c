@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:58:19 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 07:58:42 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 22:38:58 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,11 @@ int			get_next_spec(char *f)
 			return (i);
 	}
 	return (i);
+}
+
+char		*skip_flags(char *f)
+{
+	while (*f && is_flag(*f))
+		f++;
+	return (f);
 }

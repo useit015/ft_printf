@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/13 02:19:34 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/13 22:39:18 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ char				*trim_arg(char *s, t_param *arg, int len);
 char				*new_fspec(t_param *arg, char f);
 char				get_sign(t_param *arg);
 char				get_fill(t_param *arg);
+char				*skip_flags(char *f);
 char				*get_prefix(char c);
 char				*get_base(char c);
 char				*get_base(char f);
