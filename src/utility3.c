@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:58:19 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/13 22:38:58 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:54:17 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/handle.h"
 
 int			get_next_spec(char *f)
 {

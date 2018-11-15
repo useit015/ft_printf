@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 03:53:42 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 04:35:51 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:53:58 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/handle.h"
 
 int			direct_print(char *f, int *i)
 {

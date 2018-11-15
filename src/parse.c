@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:50:31 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/12 07:57:29 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:53:43 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/handle.h"
 
 void		parse_precision(char **f, t_param *arg)
 {

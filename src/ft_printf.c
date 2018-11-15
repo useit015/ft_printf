@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/14 01:44:20 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:52:55 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/handle.h"
 
 void		handle_null(char *s, int nu, char *cut)
 {
@@ -96,7 +96,6 @@ int			ft_printf(const char *format, ...)
 {
 	int		i;
 	int		j;
-	int		res;
 	char	*f;
 	va_list	ap;
 
@@ -114,8 +113,7 @@ int			ft_printf(const char *format, ...)
 		return (-1);
 	}
 	va_end(ap);
-	res = g_i;
-	write(1, g_buff, res);
-	g_ret += res;
+	write(1, g_buff, g_i);
+	g_ret += g_i;
 	return (g_ret);
 }

@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/10 02:13:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/10 02:13:50 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:54:54 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/lib.h"
 
 char		*ft_uhtoa(unsigned short n)
 {

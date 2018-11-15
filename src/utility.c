@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:37:49 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/13 06:39:17 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:53:50 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/handle.h"
 
 void	init_arg(t_param *arg)
 {

@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:48:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/14 02:34:48 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:53:17 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/handle.h"
 
 void	buff_init(char *f, int pos)
 {

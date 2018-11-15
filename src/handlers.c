@@ -6,11 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:41:51 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/13 02:13:06 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/15 21:53:06 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/ft_printf.h"
+#include "../inc/handle.h"
 
 static char	*expand_str(t_param *arg, char *s, int len, char c)
 {
