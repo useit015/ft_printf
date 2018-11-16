@@ -6,12 +6,12 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 04:06:10 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/16 04:10:49 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/handle.h"
-#include <stdio.h>
+#include "../inc/ft_printf.h"
 
 void		handle_null(char *s, int nu, char *cut, t_buff *b)
 {
