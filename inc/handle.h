@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 05:31:54 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/16 06:02:15 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 # define HANDLE_H
 
 # include <stdarg.h>
-# include "lib.h"
 # include <locale.h>
-
+# include "lib.h"
 # define BUFF_SIZE 4096
 
 typedef	struct		s_param
