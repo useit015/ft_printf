@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:48:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 04:21:53 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/16 04:25:57 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		buff_cpy(char *f, int pos, va_list ap, t_buff *b)
 	if (*s && j)
 	{
 		ft_strcat(b->buff, s);
+		free(s);
 		while (b->buff[b->i])
 			b->i++;
 		return (1);
