@@ -6,21 +6,22 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/15 21:52:55 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/16 04:06:10 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/handle.h"
+#include <stdio.h>
 
-void		handle_null(char *s, int nu, char *cut)
+void		handle_null(char *s, int nu, char *cut, t_buff *b)
 {
 	int		i;
 	int		len;
 
 	i = -1;
-	write(1, g_buff, g_i);
-	g_ret += g_i;
-	g_i = 0;
+	write(1, b->buff, b->i);
+	b->ret += b->i;
+	b->i = 0;
 	len = ft_strlen(s);
 	if (nu)
 	{
@@ -34,8 +35,8 @@ void		handle_null(char *s, int nu, char *cut)
 		len = ft_strlen(s);
 	}
 	write(1, s, len);
-	g_ret += len;
-	ft_memset(g_buff, 0, BUFF_SIZE);
+	b->ret += len;
+	ft_memset(b->buff, 0, BUFF_SIZE);
 }
 
 int			buff_is_null(char *s)
@@ -49,7 +50,7 @@ int			buff_is_null(char *s)
 	return (1);
 }
 
-static void	handle_flag(char *s, t_param *arg, char *cut)
+static void	handle_flag(char *s, t_param *arg, char *cut, t_buff *b)
 {
 	int		len;
 
@@ -60,10 +61,10 @@ static void	handle_flag(char *s, t_param *arg, char *cut)
 	s = handle_plus_space(arg, s, len);
 	if (!buff_is_null(s) || arg->f == 'p')
 		s = handle_hash(arg, s, len);
-	handle_null(s, arg->null, cut);
+	handle_null(s, arg->null, cut, b);
 }
 
-int			handler(char *f, va_list ap, char *cut)
+int			handler(char *f, va_list ap, char *cut, t_buff *b)
 {
 	int		i;
 	char	*s;
@@ -80,13 +81,13 @@ int			handler(char *f, va_list ap, char *cut)
 			s = new_fspec(&arg, *f);
 		if (arg.err)
 			return (0);
-		handle_flag(s, &arg, cut);
-		if ((i = get_next_spec(++f)) > BUFF_SIZE - g_i)
+		handle_flag(s, &arg, cut, b);
+		if ((i = get_next_spec(++f)) > BUFF_SIZE - b->i)
 		{
 			write(1, f, i);
-			return (handler(f + i + 1, ap, ""));
+			return (handler(f + i + 1, ap, "", b));
 		}
-		if (buff_cpy(f, i, ap) == 0)
+		if (buff_cpy(f, i, ap, b) == 0)
 			return (0);
 	}
 	return (1);
@@ -98,22 +99,24 @@ int			ft_printf(const char *format, ...)
 	int		j;
 	char	*f;
 	va_list	ap;
+	t_buff	b;
 
-	g_ret = 0;
+	b.ret = 0;
 	if (!format || !*format)
 		return (0);
 	f = (char *)format;
 	va_start(ap, format);
 	if ((j = direct_print(f, &i)))
 		return (j);
-	buff_init(f, i);
-	if (!handler(f + i + 1, ap, ""))
+	buff_init(f, i, &b);
+	if (!handler(f + i + 1, ap, "", &b))
 	{
-		write(1, g_buff, g_i);
+		write(1, b.buff, b.i);
 		return (-1);
 	}
 	va_end(ap);
-	write(1, g_buff, g_i);
-	g_ret += g_i;
-	return (g_ret);
+	write(1, b.buff, b.i);
+	free(b.buff);
+	b.ret += b.i;
+	return (b.ret);
 }

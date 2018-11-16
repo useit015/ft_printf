@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printf.h                                        :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/15 21:51:39 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 04:06:57 by onahiz           ###   ########.fr       */
+/*   Created: 2018/11/06 05:08:43 by onahiz            #+#    #+#             */
+/*   Updated: 2018/11/16 03:43:54 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#include "../inc/ft_printf.h"
+# include <stdio.h>
 
-int					ft_printf(const char *format, ...);
-
-#endif
+int		main()
+{
+	printf("return is --> |%d|\n", printf("printf___ |>->------------<!%2p!>-----------<-<|\n", 0));
+	printf("return is --> |%d|\n", ft_printf("ft_printf |>->------------<!%2p!>-----------<-<|\n", 0));
+	
+	return (0);
+}

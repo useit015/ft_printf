@@ -6,24 +6,24 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:48:28 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/15 21:53:17 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/16 04:03:37 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/handle.h"
 
-void	buff_init(char *f, int pos)
+void	buff_init(char *f, int pos, t_buff *b)
 {
-	g_i = 0;
-	ft_memset(g_buff, 0, BUFF_SIZE);
-	while (g_i < pos)
+	b->i = 0;
+	b->buff = ft_strnew(BUFF_SIZE);
+	while (b->i < pos)
 	{
-		g_buff[g_i] = f[g_i];
-		g_i++;
+		b->buff[b->i] = f[b->i];
+		b->i++;
 	}
 }
 
-int		buff_cpy(char *f, int pos, va_list ap)
+int		buff_cpy(char *f, int pos, va_list ap, t_buff *b)
 {
 	int		i;
 	int		j;
@@ -36,14 +36,14 @@ int		buff_cpy(char *f, int pos, va_list ap)
 		s[i] = f[i];
 	if (*(f + i + 1) && f[i] == '%')
 	{
-		if ((j = handler(f + i + 1, ap, s)))
+		if ((j = handler(f + i + 1, ap, s, b)))
 			return (1);
 	}
 	if (*s && j)
 	{
-		ft_strcat(g_buff, s);
-		while (g_buff[g_i])
-			g_i++;
+		ft_strcat(b->buff, s);
+		while (b->buff[b->i])
+			b->i++;
 		return (1);
 	}
 	if (!f[i] || (f[i] == '%' && !f[i + 1]))
@@ -63,14 +63,14 @@ char	*new_fspec(t_param *arg, char f)
 
 int		is_fspec(char f)
 {
-	if (ft_strchr("%cCsSdDiuUxXoOpb", f))
+	if (ft_strchr("%cCsSdDiuUxXoOpbfF", f))
 		return (1);
 	return (0);
 }
 
 int		is_flag(char f)
 {
-	if (ft_strchr(" +-.#lhjzL$*'", f) || ft_isdigit(f))
+	if (ft_strchr(" +-.#lhjzL$'*", f) || ft_isdigit(f))
 		return (1);
 	return (0);
 }

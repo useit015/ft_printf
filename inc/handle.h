@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/15 21:55:30 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/16 04:04:55 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,15 @@ typedef	struct		s_param
 	char			f;
 }					t_param;
 
-char				g_buff[BUFF_SIZE];
-int					g_i;
-int					g_ret;
+typedef struct		s_buff
+{
+	char			*buff;
+	int				i;
+	int				ret;
+}					t_buff;
 
 void				init_arg(t_param *arg);
-void				buff_init(char *f, int pos);
+void				buff_init(char *f, int pos, t_buff *b);
 void				parse_flags(char *f, t_param *arg, va_list ap);
 void				copy_arg_str(char *s, char *dst, int *i);
 char				*convert_b(char *f, t_param *arg, va_list ap, char *base);
@@ -70,8 +73,8 @@ int					is_flag(char f);
 int					count_ac(char *f);
 int					get_next_spec(char *f);
 int					direct_print(char *f, int *i);
-int					buff_cpy(char *f, int pos, va_list ap);
-int					handler(char *f, va_list ap, char *cut);
+int					buff_cpy(char *f, int pos, va_list ap, t_buff *b);
+int					handler(char *f, va_list ap, char *cut, t_buff *b);
 int					is_negative(t_param *arg, char **s, int *len);
 
 #endif
