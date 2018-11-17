@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/17 18:43:39 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/15 21:53:33 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 04:34:06 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,14 +79,19 @@ char		*convert_float(t_param *arg, va_list ap)
 {
 	if (arg->precision == -1)
 		arg->precision = 6;
-	return (ft_ftoa(va_arg(ap, double), arg->precision));
+	if (ft_strchr("fF", arg->f))
+		return (ft_ftoa(va_arg(ap, double), arg->precision));
+	else if (arg->f == 'e')
+		return (ft_ftoea(va_arg(ap, double), arg->precision, 'e'));
+	else
+		return (ft_ftoea(va_arg(ap, double), arg->precision, 'E'));
 }
 
 char		*convert_arg(char *f, va_list ap, t_param *arg, char *base)
 {
 	char		*s;
 
-	if (ft_strchr("fF", *f))
+	if (ft_strchr("fFeE", *f))
 		s = convert_float(arg, ap);
 	else if (*f == 'p' && (arg->hash = 1))
 		s = ft_convert_base(va_arg(ap, unsigned long), get_base('x'));

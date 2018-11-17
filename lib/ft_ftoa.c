@@ -6,12 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 22:32:01 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/13 06:33:56 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 04:47:55 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/lib.h"
-#include <stdio.h>
 
 static intmax_t	ft_pow(int nb, int power)
 {
@@ -51,6 +50,20 @@ static char		*ft_fftoa(double f, int p)
 	return (ft_strjoin(fs, s));
 }
 
+static char		*ft_ftoa_null(int p)
+{
+	int		i;
+	char	*s;
+
+	i = 1;
+	s = ft_strnew(p + 2);
+	s[0] = '0';
+	s[1] = '.';
+	while (++i < p + 2)
+		s[i] = '0';
+	return (s);
+}
+
 char			*ft_ftoa(double f, int p)
 {
 	size_t	l;
@@ -59,10 +72,10 @@ char			*ft_ftoa(double f, int p)
 	char	*s;
 	char	*fs;
 
-	if (p < 0)
-		p = 6;
-	else if (!p)
+	if (!p)
 		return (ft_lltoa(f));
+	if (!f)
+		return (ft_ftoa_null(p));
 	tmp = f * ft_pow(10, p);
 	next = (tmp - (long)tmp) * 10;
 	if (next < -5 && next >= -10)

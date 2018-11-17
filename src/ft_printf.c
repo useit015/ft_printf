@@ -6,18 +6,11 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/01 00:22:59 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 23:40:06 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 03:35:11 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/handle.h"
-
-int			ft_putbuff(t_buff *b, int ret)
-{
-	write(1, b->buff, b->i);
-	free(b->buff);
-	return (ret);
-}
 
 int			ft_printf(const char *format, ...)
 {

@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/05 00:46:08 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 06:02:15 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 03:37:57 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,21 @@ typedef struct		s_buff
 	int				ret;
 }					t_buff;
 
-void				init_arg(t_param *arg);
-void				buff_init(char *f, int pos, t_buff *b);
-void				parse_flags(char *f, t_param *arg, va_list ap);
-void				copy_arg_str(char *s, char *dst, int *i);
+int					is_fspec(char f);
+int					is_flag(char f);
+int					count_ac(char *f);
+int					get_next_spec(char *f);
+int					direct_print(char *f, int *i);
+int					ft_putbuff(t_buff *b, int ret);
+int					is_negative(t_param *arg, char **s, int *len);
+int					buff_cpy(char *f, int pos, va_list ap, t_buff *b);
+int					handler(char *f, va_list ap, char *cut, t_buff *b);
+char				*convert_arg(char *f, va_list ap, t_param *arg, char *base);
 char				*convert_b(char *f, t_param *arg, va_list ap, char *base);
 char				*trim_arg2(t_param *arg, char *s, char c, int len);
 char				*handle_plus_space(t_param *arg, char *s, int len);
 char				*handle_precision(t_param *arg, char *s, int len);
 char				*convert_uint(char *f, t_param *arg, va_list ap);
-char				*convert_arg(char *f, va_list ap, t_param *arg, char *base);
 char				*convert_int(char *f, t_param *arg, va_list ap);
 char				*handle_width(t_param *arg, char *s, int len);
 char				*handle_hash(t_param *arg, char *s, int len);
@@ -66,13 +71,9 @@ char				*skip_flags(char *f);
 char				*get_prefix(char c);
 char				*get_base(char c);
 char				*get_base(char f);
-int					is_fspec(char f);
-int					is_flag(char f);
-int					count_ac(char *f);
-int					get_next_spec(char *f);
-int					direct_print(char *f, int *i);
-int					buff_cpy(char *f, int pos, va_list ap, t_buff *b);
-int					handler(char *f, va_list ap, char *cut, t_buff *b);
-int					is_negative(t_param *arg, char **s, int *len);
+void				init_arg(t_param *arg);
+void				buff_init(char *f, int pos, t_buff *b);
+void				copy_arg_str(char *s, char *dst, int *i);
+void				parse_flags(char *f, t_param *arg, va_list ap);
 
 #endif

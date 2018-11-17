@@ -6,13 +6,37 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 07:58:19 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/15 21:54:17 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 04:57:52 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/handle.h"
 
-int			get_next_spec(char *f)
+char	*new_fspec(t_param *arg, char f)
+{
+	char	*s;
+
+	s = ft_strnew(2);
+	*s = f;
+	arg->f = 'c';
+	return (s);
+}
+
+int		is_fspec(char f)
+{
+	if (ft_strchr("%cCsSdDiuUxXoOpbfFeE", f))
+		return (1);
+	return (0);
+}
+
+int		is_flag(char f)
+{
+	if (ft_strchr(" +-.#lhjzL$'*", f) || ft_isdigit(f))
+		return (1);
+	return (0);
+}
+
+int		get_next_spec(char *f)
 {
 	int		i;
 
@@ -25,7 +49,7 @@ int			get_next_spec(char *f)
 	return (i);
 }
 
-char		*skip_flags(char *f)
+char	*skip_flags(char *f)
 {
 	while (*f && is_flag(*f))
 		f++;
