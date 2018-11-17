@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/12 03:53:42 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/15 21:53:58 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 02:06:16 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char		*trim_arg(char *s, t_param *arg, int len)
 			s++;
 		else if (arg->width - 1 > len)
 			s += 2;
+		else if (arg->width > len)
+			s++;
 	}
 	else
 	{

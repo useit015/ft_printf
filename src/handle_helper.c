@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 05:41:51 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 23:27:30 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 02:03:57 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ char		*handle_hash(t_param *a, char *s, int len)
 				i--;
 			else if (i > 1)
 				i -= 2;
+			else
+				i--;
 		}
 		s = trim_arg(s, a, len);
 		tmp = ft_strjoin(get_prefix(a->f), s + i);
