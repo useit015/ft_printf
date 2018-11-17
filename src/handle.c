@@ -6,7 +6,7 @@
 /*   By: onahiz <onahiz@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 05:52:37 by onahiz            #+#    #+#             */
-/*   Updated: 2018/11/16 05:53:07 by onahiz           ###   ########.fr       */
+/*   Updated: 2018/11/17 01:13:39 by onahiz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,22 @@ static void	display(char *s, int nu, char *cut, t_buff *b)
 {
 	int		i;
 	int		len;
+	char	*tmp;
 
 	i = -1;
 	write(1, b->buff, b->i);
 	b->ret += b->i;
 	b->i = 0;
-	len = ft_strlen(s);
 	if (nu)
 	{
+		len = ft_strlen(s);
 		while (s[++i] != '|' && i < len)
 			;
 		s[i] = 0;
 	}
 	else
 	{
+		tmp = s;
 		s = ft_strjoin(cut, s);
 		len = ft_strlen(s);
 	}
